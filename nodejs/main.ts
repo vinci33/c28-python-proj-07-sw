@@ -18,10 +18,6 @@ export const openaiController = new OpenaiController()
 
 const PORT = process.env.NODE_PORT || 8080;
 
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
-});
-
 app.use(express.static('public'))
 
 
