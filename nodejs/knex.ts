@@ -1,5 +1,5 @@
 import Knex from "knex";
-import knexConfig from "../knexfile";
+import knexConfig from "./knexfile";
 
 export type NodeEnv = "development" | "staging" | "production";
 const nodeEnv = (process.env.NODE_ENV ?? "development") as NodeEnv;

@@ -11,6 +11,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string("food_ingredient_c");
         table.string("food_ingredient_d");
         table.string("sauce");
+        table.integer('menu_foods_id');
         table.foreign("menu_foods_id").references("id").inTable("menu_foods");
         table.timestamps(false, true);
     });
@@ -20,6 +21,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string("drink_status");
         table.string("drink_ingredient_a");
         table.string("drink_ingredient_b");
+        table.integer('menu_drinks_id');
         table.foreign("menu_drinks_id").references("id").inTable("menu_drinks");
         table.timestamps(false, true);
     });
