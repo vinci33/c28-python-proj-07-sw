@@ -18,14 +18,14 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 @app.route('/speech-to-text', methods=['POST'])
 async def speech_to_text(request):
-    # Get the text from the request body
-    text = request.json.get('text')
+    # Get the audio data from the request body
+    audio_data = request.json.get('audio_data')
 
-    # Use the OpenAI API to convert the text to speech
-    response = openai.TextCompletion.create(engine="text-davinci-002", prompt=text, max_tokens=5)
+    # Use the OpenAI API to convert the audio data to text
+    response = openai.SpeechToText.create(audio_data=audio_data)
 
     # Return the response from the OpenAI API
-    return json({'response': response.choices[0].text.strip()})
+    return json({'response': response.text})
 
 app.blueprint(routes)
 

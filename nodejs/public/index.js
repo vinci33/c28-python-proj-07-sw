@@ -1,21 +1,21 @@
-// Create a new SpeechRecognition object
-const recognition = new window.SpeechRecognition();
+// Create a new MediaRecorder object
+const mediaRecorder = new MediaRecorder(window.stream);
 
-// Set up the onresult event
-recognition.onresult = function(event) {
-    // Get the transcript of the user's voice input
-    var transcript = event.results[0][0].transcript;
+// Set up the ondataavailable event
+mediaRecorder.ondataavailable = function(event) {
+    // Get the audio data from the event
+    var audio_data = event.data;
 
-    // Log the transcript
-    console.log(transcript);
+    // Log the audio data
+    console.log(audio_data);
 
-    // Here you can add the fetch API call to send `transcript` to your Python backend
-    fetch('http://your-python-backend-url', {
+    // Send the audio data to the Python backend
+    fetch('http://your-python-backend-url/speech-to-text', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: transcript }),
+        body: JSON.stringify({ audio_data: audio_data }),
     })
     .then(response => response.json())
     .then(data => console.log(data))
@@ -24,5 +24,5 @@ recognition.onresult = function(event) {
     });
 };
 
-// Start the speech recognition
-recognition.start();
+// Start the MediaRecorder
+mediaRecorder.start();
