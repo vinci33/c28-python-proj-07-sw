@@ -123,3 +123,5 @@ python_modules/
 
 # env 
 .env
+
+Instruction.txt
