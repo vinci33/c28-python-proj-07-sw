@@ -6,6 +6,9 @@ export async function up(knex: Knex): Promise<void> {
         table.increments();
         table.integer("table_id").notNullable();
         table.timestamp('entry_times').defaultTo(knex.fn.now());
+        table.string("username");
+        table.string("password");
+        table.integer("phone");
         table.timestamps(false, true);
     });
 }

@@ -4,7 +4,7 @@ async function startRecording() {
         const mediaRecorder = new MediaRecorder(stream);
         let chunks = [];
 
-        mediaRecorder.onDataAvailable = function (event) {
+        mediaRecorder.ondataavailable = function (event) {
             chunks.push(event.data);
         };
 

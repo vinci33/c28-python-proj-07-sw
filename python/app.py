@@ -1,5 +1,6 @@
 import openai
 from sanic import Sanic
+from sanic_ext import Extend
 from sanic.response import json
 from routes import routes
 from dotenv import load_dotenv
@@ -12,6 +13,9 @@ print(key)
 
 app = Sanic("BAD_project_team7_2023_11_05")
 
+app = Sanic(__name__)
+app.config.CORS_ORIGINS = "http://localhost:8080"
+Extend(app)
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
