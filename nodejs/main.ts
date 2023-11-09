@@ -1,5 +1,4 @@
 import express from 'express';
-import { OpenaiController } from './TsControllers/OpenaiController';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,7 +11,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-export const openaiController = new OpenaiController()
+
 
 // app.use('/', routes);
 
