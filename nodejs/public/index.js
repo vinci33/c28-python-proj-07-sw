@@ -1,4 +1,7 @@
 const socket = new WebSocket('ws://localhost:8000/ws');
+console.log("Attempting to connect to WebSocket server at ws://localhost:8000/ws");
+console.log("socket:", socket);
+console.log("Attempting to connect to WebSocket server at ws://localhost:8000/ws");
 console.log("socket:", socket);
 
 const chatbotToggler = document.querySelector(".chatbot-toggler");
@@ -198,31 +201,33 @@ async function sendDataToServer(blob) {
 
 
 socket.onopen = function (event) {
+    console.log("WebSocket connection opened:", event);
     socket.send(JSON.stringify({ id: 1, type: 'text', data: 'Hello, server!' }));
 };
 
 socket.onerror = function (event) {
-    console.error("WebSocket 錯誤:", event);
+    console.error("WebSocket error:", event);
 };
 
-function sendTextMessage(text, source) {
-    socket.send(JSON.stringify({ source: source, type: 'text', data: text }));
-}
-// sendTextMessage('Hello, server from .send !', 'A');
+// function sendTextMessage(text, source) {
+//     socket.send(JSON.stringify({ source: source, type: 'text', data: text }));
+// }
+// // sendTextMessage('Hello, server from .send !', 'A');
 
-function sendTextMessageA(text) {
-    socket.send(JSON.stringify({ source: 'A', type: 'text', data: text }));
-}
-sendTextMessageA('Hello, server from .sendA !');
+// function sendTextMessageA(text) {
+//     socket.send(JSON.stringify({ source: 'A', type: 'text', data: text }));
+// }
+// // sendTextMessageA('Hello, server from .sendA !');
 
-socket.onmessage = function (event) {
-    const message = JSON.parse(event.data);
-    if (message.type === 'textFromServer') {
-        console.log('收到文字訊息: ' + message.data);
-    }
-};
+// socket.onmessage = function (event) {
+//     console.log("WebSocket message received:", event);
+//     const message = JSON.parse(event.data);
+//     if (message.type === 'textFromServer') {
+//         console.log('Received text message: ' + message.data);
+//     }
+// };
 
-async function sendVoiceBlob(blob) {
-    const arrayBuffer = await blob.arrayBuffer();
-    socket.send(arrayBuffer);
-}
+// async function sendVoiceBlob(blob) {
+//     const arrayBuffer = await blob.arrayBuffer();
+//     socket.send(arrayBuffer);
+// }

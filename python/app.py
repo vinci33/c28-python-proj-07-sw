@@ -21,14 +21,16 @@ print(openai.api_key)
 app = Sanic(__name__)
 app.config.CORS_ORIGINS = "http://localhost:8080"
 Extend(app)
-
-async def websocket_handler(websocket, path):
-    print("WebSocket handler started")
+print("Sanic app created")
+async def websocket_handler(websocket, ws):
+    print("WebSocket handler started for path:", ws)
     while True:
+        print("Waiting for message...")
        
 
         try:
             message = await websocket.recv()
+            print("Received WebSocket message:", message)
             data = json.loads(message) 
             print(message ,data)
             if data['type'] == 'whisper_request':
@@ -50,7 +52,7 @@ async def websocket_handler(websocket, path):
 
         except json.JSONDecodeError:
             # Handle JSON decode error
-            print("Received non-JSON message")
+            print("Received non-JSON message:", message)
         except Exception as e:
             # Handle other errors
             print(f"An error occurred: {e}")
@@ -97,7 +99,7 @@ async def speech_to_text(request):
 
     return json({'response': response.text})
 
-app.blueprint(routes)
+# app.blueprint(routes)
 
 if __name__ == "__main__":
     print("Starting server") 
