@@ -21,6 +21,8 @@ print(openai.api_key)
 app = Sanic(__name__)
 app.config.CORS_ORIGINS = "http://localhost:8080"
 Extend(app)
+
+
 print("Sanic app created")
 async def websocket_handler(websocket, ws):
     print("WebSocket handler started for path:", ws)
@@ -29,26 +31,23 @@ async def websocket_handler(websocket, ws):
        
 
         try:
-            message = await websocket.recv()
+            message = await ws.recv()
             print("Received WebSocket message:", message)
             data = json.loads(message) 
             print(message ,data)
+
             if data['type'] == 'whisper_request':
-            # Process Whisper
                 whisper_response = process_with_whisper(data['data'])
-                await websocket.send(json.dumps({'type': 'whisper_response', 'data': whisper_response}))
+                await ws.send(json.dumps({'type': 'whisper_response', 'data': whisper_response}))
         
             elif data['type'] == 'messageTypeA':
-            # Process ChatGPT request
                 chatgpt_response = process_with_chatgpt(data['data'])
-                await websocket.send(json.dumps({'type': 'chatgpt_response', 'data': chatgpt_response}))
+                await ws.send(json.dumps({'type': 'chatgpt_response', 'data': chatgpt_response}))
 
             elif data['source'] == 'A':
-            # Process other types of messages
-            # Replace with actual processing logic
                 message_from_A = data['data']
                 # response = process_messageTypeB(data['data'])
-                await websocket.send(json.dumps({'type': 'messageTypeB_response', 'data': message_from_A}))
+                await ws.send(json.dumps({'type': 'messageTypeB_response', 'data': message_from_A}))
 
         except json.JSONDecodeError:
             # Handle JSON decode error
@@ -104,4 +103,4 @@ async def speech_to_text(request):
 if __name__ == "__main__":
     print("Starting server") 
     app.add_websocket_route(websocket_handler, '/ws')
-    app.run(host="0.0.0.0", port=8000, workers=1)
+    app.run(host="0.0.0.0", port=8000, debug=True)
