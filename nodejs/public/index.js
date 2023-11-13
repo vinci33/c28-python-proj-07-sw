@@ -1,12 +1,91 @@
-const socket = new WebSocket('ws://localhost:8000/ws');
+let socket;
+
+function initWebSocket() {
+    socket = new WebSocket("ws://localhost:8000/ws");
+
+    socket.onopen = function (event) {
+        console.log("WebSocket connection opened:", event);
+    };
+
+    socket.onmessage = function (event) {
+        console.log("WebSocket message received:", event);
+        const message = JSON.parse(event.data);
+        if (message.type === 'chatgpt_response') {
+            console.log('Received text message: ' + message.data);
+        }
+    };
+
+    socket.onerror = function (event) {
+        console.error("WebSocket error:", event);
+    };
+
+    socket.onclose = function (event) {
+        console.log("WebSocket connection closed:", event);
+        // Reconnect after a delay
+        setTimeout(initWebSocket, 5000);
+    };
+}
+
+function promiseOnmessage(type) {
+    return new Promise((resolve, reject) => {
+        socket.onmessage = function (event) {
+            console.log("WebSocket message received:", event);
+            const message = JSON.parse(event.data);
+            if (message.type === type) {
+                console.log('Received text message: ' + message.data);
+                resolve(message.data);
+            }
+        }
+        socket.onerror = function (error) {
+            reject(error);
+        }
+    });
+}
+
+
+
+async function sendVoiceBlob(blob) {
+    try {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        const base64Data = await new Promise((resolve, reject) => {
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+        });
+        const message = JSON.stringify({ type: 'voice', data: base64Data });
+        await socket.send(message);
+    } catch (error) {
+        console.error("Failed to send audioBlob:", error);
+    }
+}
+async function sendTextMessage(text, type) {
+    try {
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            await socket.send(JSON.stringify({ type: type, data: text }));
+        } else {
+            console.log("Can't send message, the WebSocket connection isn't open");
+        }
+    } catch (error) {
+        console.error("Failed to send message:", error);
+    }
+}
+
+initWebSocket();
 console.log("Attempting to connect to WebSocket server at ws://localhost:8000/ws");
 console.log("socket:", socket);
-console.log("Attempting to connect to WebSocket server at ws://localhost:8000/ws");
-console.log("socket:", socket);
+
+// socket.onmessage = function (event) {
+//     console.log("WebSocket message received:", event);
+//     const message = JSON.parse(event.data);
+//     if (message.type === 'whisper_response') {
+//         console.log('Received text message: ' + message.data);
+//     }
+// };
 
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const closeBtn = document.querySelector(".close-btn");
 const chatbox = document.querySelector(".chatbox");
+const voiceChatbox = document.querySelector(".voice-chatbox");
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
 let userMessage = null; // Variable to store user's message
@@ -24,28 +103,16 @@ const createChatLi = (message, className) => {
     chatLi.querySelector("p").textContent = message;
     return chatLi; // return chat <li> element
 }
-const generateResponse = (chatElement) => {
-    const API_URL = "https://api.openai.com/v1/chat/completions";
-    const messageElement = chatElement.querySelector("p");
-    // Define the properties and message for the API request
-    const requestOptions = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: userMessage }],
-        })
-    }
-    // Send POST request to API, get response and set the reponse as paragraph text
-    fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
-        messageElement.textContent = data.choices[0].message.content.trim();
-    }).catch(() => {
+const generateResponse = async (chatElement, type) => {
+    try {
+        const messageElement = chatElement.querySelector("p");
+        sendTextMessage(userMessage, 'user_message');
+        messageElement.textContent = await promiseOnmessage(type);
+        chatbox.scrollTo(0, chatbox.scrollHeight)
+    } catch {
         messageElement.classList.add("error");
         messageElement.textContent = "Oops! Something went wrong. Please try again.";
-    }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+    }
 }
 const handleChat = () => {
     userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
@@ -62,75 +129,44 @@ const handleChat = () => {
         const incomingChatLi = createChatLi("Thinking...", "incoming");
         chatbox.appendChild(incomingChatLi);
         chatbox.scrollTo(0, chatbox.scrollHeight);
-        generateResponse(incomingChatLi);
+        generateResponse(incomingChatLi, 'chatgpt_response_chatbox');
     }, 600);
 }
+userMessageFmVoice = async () => {
+    await promiseOnmessage('whisper_response');
+    console.log(`Fm handle Fun : ${userMessageFmVoice}`);
+}
+
+// generateResponse(incomingVoiceLi, 'chatgpt_response_voice-chatbox');
+const handleVoiceChat = async () => {
+
+    // const incomingVoiceLi = createChatLi("Listening...", "incoming");
+    // voiceChatbox.appendChild(incomingVoiceLi);
+
+    // await new Promise(resolve => setTimeout(resolve, 600));
+    const incomingVoiceLi = createChatLi("Listening...", "incoming");
+    voiceChatbox.appendChild(incomingVoiceLi);
+    userMessageFmVoice = await promiseOnmessage('whisper_response');
+    console.log(`Fm handle Fun : ${userMessageFmVoice}`);
+    voiceChatbox.appendChild(createChatLi(userMessageFmVoice, "outgoing"));
+    generateResponse(incomingVoiceLi, 'chatgpt_response_voice-chatbox');
+
+}
 chatInput.addEventListener("input", () => {
-    // Adjust the height of the input textarea based on its content
     chatInput.style.height = `${inputInitHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
 });
 chatInput.addEventListener("keydown", (e) => {
-    // If Enter key is pressed without Shift key and the window 
-    // width is greater than 800px, handle the chat
     if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
         e.preventDefault();
         handleChat();
     }
 });
+
+
 sendChatBtn.addEventListener("click", handleChat);
 closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
 chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
-
-
-// async function startRecording() {
-//     try {
-//         let stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-//         const mediaRecorder = new MediaRecorder(stream);
-//         let chunks = [];
-
-//         mediaRecorder.ondataavailable = function (event) {
-//             chunks.push(event.data);
-//         };
-
-//         mediaRecorder.onstop = async function () {
-//             let blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
-//             chunks = [];
-
-//             let arrayBuffer = await blob.arrayBuffer();
-//             let audio_data = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
-
-//             try {
-//                 // Send the audio data to the Python backend
-//                 let response = await fetch('http://localhost:8000/speech-to-text', {
-//                     method: 'POST',
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                     },
-//                     body: JSON.stringify({ audio_data: audio_data }),
-//                 });
-
-//                 let data = await response.json();
-//                 console.log(data);
-//             } catch (error) {
-//                 console.error('Error:', error);
-//             }
-//         };
-
-//         let button = document.querySelector('#start');
-
-//         button.onmousedown = button.ontouchstart = function () {
-//             mediaRecorder.start();
-//         };
-
-//         button.onmouseup = button.ontouchend = function () {
-//             mediaRecorder.stop();
-//         };
-//     } catch (err) {
-//         console.log('getUserMedia error: ', err);
-//     }
-// }
-
 
 
 const recordButton = document.querySelector("#recordButton");
@@ -170,7 +206,7 @@ function stopRecording() {
         mediaRecorder.addEventListener("stop", async () => {
             const audioBlob = new Blob(audioChunks);
             try {
-                await sendDataToServer(audioBlob);
+                await sendVoiceBlob(audioBlob);
             } catch (err) {
                 console.log("Stop recode fail:", err);
             }
@@ -178,36 +214,25 @@ function stopRecording() {
     }
 }
 
-async function sendDataToServer(blob) {
-    try {
-        const formData = new FormData();
-        formData.append("audio", blob);
-        const response = await fetch("/upload-audio", {
-            method: "POST",
-            body: formData
-        });
-        const data = await response.text();
-        document.getElementById("message").innerText = "接收到的訊息: " + data;
-        return data;
-    } catch (err) {
-        console.log("Data to server failed :", err);
-        throw err;
-    }
-}
-
-// startRecording();
 
 
 
 
-socket.onopen = function (event) {
-    console.log("WebSocket connection opened:", event);
-    socket.send(JSON.stringify({ id: 1, type: 'text', data: 'Hello, server!' }));
-};
+// socket.onopen = function (event) {
+//     console.log("WebSocket connection opened:", event);
+//     socket.send(JSON.stringify({ source: 1, type: 'text', data: 'Hello, server!' }));
+//     // socket.send(JSON.stringify({ source: 'A', type: 'text', data: "test1" }))
+//     sendTextMessageA('Hello, server from .sendA !')
+// };
 
-socket.onerror = function (event) {
-    console.error("WebSocket error:", event);
-};
+// socket.onmessage = function (event) {
+//     console.log("WebSocket message received:", event);
+//     const message = JSON.parse(event.data);
+//     if (message.type === 'messageTypeA_response') {
+//         console.log('Received text message: ' + message.data);
+//     }
+// };
+
 
 // function sendTextMessage(text, source) {
 //     socket.send(JSON.stringify({ source: source, type: 'text', data: text }));
@@ -217,12 +242,12 @@ socket.onerror = function (event) {
 // function sendTextMessageA(text) {
 //     socket.send(JSON.stringify({ source: 'A', type: 'text', data: text }));
 // }
-// // sendTextMessageA('Hello, server from .sendA !');
+// ;
 
 // socket.onmessage = function (event) {
 //     console.log("WebSocket message received:", event);
 //     const message = JSON.parse(event.data);
-//     if (message.type === 'textFromServer') {
+//     if (message.type === 'messageTypeA_response') {
 //         console.log('Received text message: ' + message.data);
 //     }
 // };
@@ -231,3 +256,11 @@ socket.onerror = function (event) {
 //     const arrayBuffer = await blob.arrayBuffer();
 //     socket.send(arrayBuffer);
 // }
+
+// socket.onerror = function (event) {
+//     console.error("WebSocket error:", event);
+// };
+
+// sendTextMessageA('Hello, server from .sendA !');
+
+
