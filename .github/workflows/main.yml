@@ -1,1 +1,70 @@
+name: memo-ci-cd-abcd
+on:
+  push:
+    branches:
+      - "jason"
+  workflow_dispatch:
 
+env:
+  TEST__DB_NAME: memo_wall_testing
+  TEST__DB_USERNAME: wall
+  TEST__DB_PASSWORD: postgres
+  TEST__DB_HOSTNAME: postgres
+  TEST__DB_PORT: 5432
+
+jobs:
+#   testing:
+#     runs-on: ubuntu-latest
+#     container: node:latest
+#     services:
+#       postgres:
+#         image: postgres
+#         env:
+#           POSTGRES_DB: ${{env.TEST__DB_NAME}}
+#           POSTGRES_USER: ${{env.TEST__DB_USERNAME}}
+#           POSTGRES_PASSWORD: ${{env.TEST__DB_PASSWORD}}
+#           POSTGRES_PORT: ${{env.TEST__DB_PORT}}
+#           POSTGRES_HOST: ${{env.TEST__DB_HOSTNAME}}
+#         ports:
+#           - 5432:5432
+#     steps:
+#       - uses: actions/checkout@v3
+#       - run: |
+#           cd 03_BAD/BAD003/review/memo-wall
+#           yarn install
+#           yarn knex migrate:latest --env testing
+#           yarn jest
+  
+  deploy:
+    runs-on: ubuntu-latest
+    # needs: testing
+    steps:
+      - name: ssh to pull latest version
+        uses: appleboy/ssh-action@master
+        with:
+          script: |
+            cd c28-bad-proj-07-sw/nodejs
+            git pull origin main
+            yarn install
+            yarn knex migrate:latest --env production
+            pm2 restart 0
+          host: https://jasonrobinyim.xyz/
+          username: ubuntu
+          port: 22
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+
+#   deploy-python:
+#     runs-on: ubuntu-latest
+#     needs: testing
+#     steps:
+#       - name: ssh to pull latest version
+#         uses: appleboy/ssh-action@master
+#         with:
+#           script: |
+#             cd hk-map-28-aug-23-sw-exercises/03_BAD/BAD008/exercises/py-backend
+#             git pull origin main
+#             pm2 restart 1
+#           host: jameslam.me
+#           username: ubuntu
+#           port: 22
+#           key: ${{secrets.SSH_PRIVATE_KEY}}
