@@ -2,7 +2,9 @@ import { Knex } from "knex";
 
 
 export async function up(knex: Knex): Promise<void> {
-    await knex.schema.createTable("restaurants_info", (table) => {
+    console.log(knex.client.database())
+    console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+    await knex.schema.createTable("restaurants_info", (table) => { 
         table.increments();
         table.string("name").notNullable().unique();
         table.string("address");
@@ -11,7 +13,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string("email");
         table.integer("working_hours");
         table.string("image");
-        table.timestamps(false, true);
+        // table.timestamps(false, true);
     });
 }
 
