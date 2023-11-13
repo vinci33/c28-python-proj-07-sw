@@ -5,7 +5,7 @@ dotenv.config();
 
 const config: { [key: string]: Knex.Config } = {
     development: {
-        debug: true,
+        debug: false,
         client: "postgresql",
         connection: {
             database: process.env.DB_NAME,

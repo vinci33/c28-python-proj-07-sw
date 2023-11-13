@@ -2,9 +2,6 @@ import knex, { Knex } from "knex";
 
 // export async function seed(knex: Knex): Promise<void> {
   export async function seed(knex: Knex): Promise<void> {
-  await knex("restaurants_info").del();
-  
-
   // Reset the id_seq with knex
   // await knex.raw('ALTER SEQUENCE students_id_seq RESTART WITH 1');
   // await knex.raw('ALTER SEQUENCE teachers_id_seq RESTART WITH 1');
@@ -18,7 +15,6 @@ import knex, { Knex } from "knex";
       email:"jason20210106@gmail.com",
       working_hours:9002230,
       image:null
-
     })
     .into("restaurants_info")
     .returning("id");
