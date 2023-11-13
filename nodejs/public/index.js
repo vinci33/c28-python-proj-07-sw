@@ -88,20 +88,17 @@ const chatbox = document.querySelector(".chatbox");
 const voiceChatbox = document.querySelector(".voice-chatbox");
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
-let userMessage = null; // Variable to store user's message
-
-const API_KEY = "PASTE-YOUR-API-KEY"; // Paste your API key here
+let userMessage = null;
 const inputInitHeight = chatInput.scrollHeight;
 
 
 const createChatLi = (message, className) => {
-    // Create a chat <li> element with passed message and className
     const chatLi = document.createElement("li");
     chatLi.classList.add("chat", `${className}`);
     let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">person</span><p></p>`;
     chatLi.innerHTML = chatContent;
     chatLi.querySelector("p").textContent = message;
-    return chatLi; // return chat <li> element
+    return chatLi;
 }
 const generateResponse = async (chatElement, type) => {
     try {
@@ -115,17 +112,14 @@ const generateResponse = async (chatElement, type) => {
     }
 }
 const handleChat = () => {
-    userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
+    userMessage = chatInput.value.trim();
     if (!userMessage) return;
-    // Clear the input textarea and set its height to default
     chatInput.value = "";
     chatInput.style.height = `${inputInitHeight}px`;
-    // Append the user's message to the chatbox
     chatbox.appendChild(createChatLi(userMessage, "outgoing"));
     chatbox.scrollTo(0, chatbox.scrollHeight);
 
     setTimeout(() => {
-        // Display "Thinking..." message while waiting for the response
         const incomingChatLi = createChatLi("Thinking...", "incoming");
         chatbox.appendChild(incomingChatLi);
         chatbox.scrollTo(0, chatbox.scrollHeight);
@@ -137,7 +131,6 @@ userMessageFmVoice = async () => {
     console.log(`Fm handle Fun : ${userMessageFmVoice}`);
 }
 
-// generateResponse(incomingVoiceLi, 'chatgpt_response_voice-chatbox');
 const handleVoiceChat = async () => {
 
     // const incomingVoiceLi = createChatLi("Listening...", "incoming");
