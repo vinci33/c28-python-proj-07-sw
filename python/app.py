@@ -10,6 +10,14 @@ from sanic import Sanic
 from routes import routes
 from dotenv import load_dotenv
 import os
+# import langchain
+# from langchain.agents import initialize_agent
+# from langchain.agents import AgentType
+# from langchain.chat_models import ChatOpenAI
+# from langchain.prompts import MessagesPlaceholder
+# from langchain.memory import ConversationSummaryBufferMemory
+# from langchain.chains.summarize import load_summarize_chain
+# from langchain.schema import SystemMessage
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
@@ -98,7 +106,7 @@ def user_message_record(transcript):
 def process_with_chatgpt(text):
     respond =  client.chat.completions.create(
         messages=[
-            {
+            {   
                 "role": "user",
                 "content": text,
             }
@@ -108,6 +116,70 @@ def process_with_chatgpt(text):
     return respond.choices[0].message.content
 
    
+
+# conversation_histories = {}
+
+# MAX_HISTORY_LENGTH = 5  # Adjust this number based on your requirements
+
+# def trim_conversation_history(history):
+#     return history[-MAX_HISTORY_LENGTH:]
+
+# def get_conversation_history(session_id):
+#     return conversation_histories.get(session_id, [])
+
+# def generate_response(user_id, user_message):
+#     history = get_conversation_history(user_id)
+#     trimmed_history = trim_conversation_history(history)
+
+#     response = client.chat.completions.create(
+#         messages=trimmed_history + [{"role": "user", "content": user_message}],
+#         model="gpt-3.5-turbo-1106",
+#     )
+#     bot_message = response.choices[0].message.content
+#     update_conversation_history(user_id, user_message, bot_message)
+
+#     return bot_message
+
+# def update_conversation_history(session_id, user_message, model_message):
+#     if session_id not in conversation_histories:
+#         conversation_histories[session_id] = []
+#     conversation_histories[session_id].append({"role": "user", "content": user_message})
+#     conversation_histories[session_id].append({"role": "assistant", "content": model_message})
+
+# def generate_response(session_id, user_message):
+#     history = get_conversation_history(session_id)
+#     history.append({"role": "user", "content": user_message})
+
+#     response = client.chat.create(
+#         model="gpt-3.5-turbo",  # Use the appropriate model
+#         messages=history[-MAX_HISTORY_LENGTH:]  # Limit the history length
+#     )
+
+#     model_message = response.choices[0].message.content
+#     update_conversation_history(session_id, user_message, model_message)
+#     return model_message
+
+
+# tools = [
+  
+# ]
+
+# agent_kwargs = {
+#     "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
+#     "system_message": system_message,
+# }
+# memory = ConversationSummaryBufferMemory(
+#     memory_key="memory", return_messages=True, llm=llm, max_token_limit=1000)
+
+# agent = initialize_agent(
+#     tools,
+#     llm,
+#     agent=AgentType.OPENAI_FUNCTIONS,
+#     verbose=True,
+#     agent_kwargs=agent_kwargs,
+#     memory=memory,
+# )
+
 
 
 
