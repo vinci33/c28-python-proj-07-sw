@@ -7,10 +7,10 @@ function initWebSocket() {
         console.log("WebSocket connection opened:", event);
     };
 
-    socket.onmessage = function (event) {
+    socket.onmessage = function (event, type) {
         console.log("WebSocket message received:", event);
         const message = JSON.parse(event.data);
-        if (message.type === 'chatgpt_response') {
+        if (message.type === type) {
             console.log('Received text message: ' + message.data);
         }
     };
@@ -74,13 +74,13 @@ initWebSocket();
 console.log("Attempting to connect to WebSocket server at ws://localhost:8000/ws");
 console.log("socket:", socket);
 
-// socket.onmessage = function (event) {
-//     console.log("WebSocket message received:", event);
-//     const message = JSON.parse(event.data);
-//     if (message.type === 'whisper_response') {
-//         console.log('Received text message: ' + message.data);
-//     }
-// };
+socket.onmessage = function (event) {
+    console.log("WebSocket message received:", event);
+    const message = JSON.parse(event.data);
+    if (message.type === 'whisper_response') {
+        console.log('Received text message: ' + message.data);
+    }
+};
 
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const closeBtn = document.querySelector(".close-btn");
@@ -105,12 +105,25 @@ const generateResponse = async (chatElement, type) => {
         const messageElement = chatElement.querySelector("p");
         sendTextMessage(userMessage, 'user_message');
         messageElement.textContent = await promiseOnmessage(type);
+        console.log(`Fm generate Fun : ${messageElement.textContent}`);
         chatbox.scrollTo(0, chatbox.scrollHeight)
     } catch {
         messageElement.classList.add("error");
         messageElement.textContent = "Oops! Something went wrong. Please try again.";
     }
 }
+const generateResponseVoice = async (chatElement, type) => {
+    try {
+        const messageElement = chatElement.querySelector("p");
+        messageElement.textContent = await promiseOnmessage(type);
+        console.log(`Fm generate respond voice Fun : ${messageElement.textContent}`);
+        // chatbox.scrollTo(0, chatbox.scrollHeight)
+    } catch {
+        messageElement.classList.add("error");
+        messageElement.textContent = "Oops! Something went wrong. Please try again.";
+    }
+}
+
 const handleChat = () => {
     userMessage = chatInput.value.trim();
     if (!userMessage) return;
@@ -126,10 +139,10 @@ const handleChat = () => {
         generateResponse(incomingChatLi, 'chatgpt_response_chatbox');
     }, 600);
 }
-userMessageFmVoice = async () => {
-    await promiseOnmessage('whisper_response');
-    console.log(`Fm handle Fun : ${userMessageFmVoice}`);
-}
+// userMessageFmVoice = async () => {
+//     await promiseOnmessage('whisper_response');
+//     console.log(`Fm handle Fun : ${userMessageFmVoice}`);
+// }
 
 const handleVoiceChat = async () => {
 
@@ -138,21 +151,29 @@ const handleVoiceChat = async () => {
 
     // await new Promise(resolve => setTimeout(resolve, 600));
     const incomingVoiceLi = createChatLi("Listening...", "incoming");
-    voiceChatbox.appendChild(incomingVoiceLi);
     userMessageFmVoice = await promiseOnmessage('whisper_response');
-    console.log(`Fm handle Fun : ${userMessageFmVoice}`);
     voiceChatbox.appendChild(createChatLi(userMessageFmVoice, "outgoing"));
-    generateResponse(incomingVoiceLi, 'chatgpt_response_voice-chatbox');
+    console.log(`Fm handle Fun : ${userMessageFmVoice}`);
+    userMessage = userMessageFmVoice;
+    generateResponseVoice(incomingVoiceLi, 'chatgpt_response_voice-chatbox');
+    voiceChatbox.appendChild(incomingVoiceLi);
 
 }
+// document.querySelector("#recordButtonChatbox").addEventListener("click", handleVoiceChat);
+
 chatInput.addEventListener("input", () => {
     chatInput.style.height = `${inputInitHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
 });
+
 chatInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+    if (e.key === "Enter") {
         e.preventDefault();
-        handleChat();
+        if (!e.shiftKey) {
+            handleChat();
+        } else {
+            chatInput.value += "\n";
+        }
     }
 });
 
@@ -197,9 +218,11 @@ function stopRecording() {
         isRecording = false;
         recordButton.classList.remove("active");
         mediaRecorder.addEventListener("stop", async () => {
+            handleVoiceChat()
             const audioBlob = new Blob(audioChunks);
             try {
                 await sendVoiceBlob(audioBlob);
+
             } catch (err) {
                 console.log("Stop recode fail:", err);
             }

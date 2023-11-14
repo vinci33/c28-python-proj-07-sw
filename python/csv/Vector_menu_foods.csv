@@ -1,0 +1,65 @@
+Unnamed: 0,Vector_menu_foods,Unnamed: 2,Unnamed: 3,Unnamed: 4,Unnamed: 5,Unnamed: 6,Unnamed: 7,Unnamed: 8,Unnamed: 9
+English Menu,,,,,,,,,Chinese Menu
+Food_name,cook,food_ingredient_a,food_ingredient_b,food_ingredient_c,food_ingredient_d,sauce,menu_food_id,,
+Sprouts shredded pork fried noodles,fried,porks,sprouts,,noodles,,101,,銀芽肉絲 炒麵
+Fried fish flat noodles,fried,fish,,,noodles,,102,?,菜遠魚柳炒河
+Maggi seaoning beef fried rice,fried,beef,,,rice,maggi,103,,美極生炒牛肉飯
+Pepper beef fried noodle,fried,beef,,pepper,noodles,pepper,104,,黑椒牛肉炒意粉
+Indoneasian fried rice,fried,shrimp,pork,pepper,rice,pineapple,105,,印尼炒飯
+Thai pineapple fried rice,fried,shrimp,pork,pineapple,rice,chilli,106,,泰式菠蘿海鮮炒飯
+Sake fried rice noodles,fried,,,,noodles,,107,,清酒炒米粉
+Singaporean fried rice noodles,fried,shrimp,pork,,noddles,curry,108,,星洲炒米
+Japanese eel fried rice ,fried,eel,,,rice ,soysauce,109,,日式鰻魚炒飯
+beef fried noddles,fried,beef,,,noodles,soysauce,110,,乾炒牛河
+Yanzi fried rice,fried,pork,vegetable , ,rice,,111,?,楊州炒飯
+Western fried rice,fried,pork,egg,,rice,ketchup ,112,,西炒飯
+Satay beef fried noodles,fried,beef,,,noodles,satay,113,,沙爹牛肉炒可
+Teppanyaki porkchop fried noddles,fried,porkchop,,pepper,noodles,,114,,鐵板豬扒烏冬
+Teppanyaki pork fried instant noddles,fried,porkchop,,pepper,noodes,,115,,鐵板豬扒炒公仔麵
+Teppanyaki beef fried noddles,fried,beef,,pepper,noodes,,116,,鐵板牛肉炒公仔麵
+Teppanyaki seafood fried noddles,fried,seafood,,pepper,noodles,,117,,鐵板海鮮炒公仔麵
+Teppanyaki seafood fried noddles,fried,seafood,,pepper,noodles,,118,,鐵板海鮮炒烏冬
+Braised vermicelli with shredded pork,fried,pork ,,,rice noodles,,119,,榨菜肉絲炆米
+Green onion shrimp fried rice,fried,shrimp , ,green onion,rice,,120,,香蔥蝦仁炒滑蛋飯
+Fu yung fried rice ,fried,pork ,egg,onion,rice,,121,,芙蓉蛋飯
+Chives chicken fried rice ,fried,chicken,,,rice ,,122,,香蔥鹹魚雞粒炒飯
+Baked pork chop rice ,baked ,pork chop,cheese ,tomato,rice ,,123,,招牌焗鮮茄豬扒
+Baked ox tongue chop rice ,baked ,ox tongue,cheese ,tomato,rice ,,124,,焗鮮茄牛脷
+Baked tomato hot dog rice ,baked ,hot dog ,cheese ,tomato,,,125,,焗鮮茄芝士肉醬腸仔
+Baked chicken filet ,baked ,chicken filet ,,tomato,rice ,,126,,焗雞扒
+Baked cheese seafood ,baked ,seafood ,cheese ,,rice ,,127,, 焗芝士海鮮
+Baked tomato cheese seafood ,baked ,seafood ,cheese ,tomato,,,128,, 焗芝士海鮮
+Baked cheese fish filet ,baked ,fish filet ,cheese ,,rice ,,129,,焗芝士魚柳
+Baked Pepper sirloin steak rice ,baked ,sirloin steak rice ,pepper ,,rice ,,130,,黑椒西冷牛扒
+Baked pepper chicken filet rice ,baked , chicken filet ,pepper ,,rice ,,131,,焗黑椒雞扒
+Baked pepper beef rice ,baked ,beef ,pepper ,,rice ,,132,,焗黑椒牛里
+Baked  curry potato porkchop ,baked ,porkchop ,,potato ,rice ,curry,133,,咖哩薯仔豬扒
+Baked  curry potato chicken filet,baked ,chicken filet ,,potato ,rice ,curry ,134,,焗咖哩薯仔雞扒
+Baked  curry potato beef,baked ,beef,,potato ,rice ,curry,135,,焗咖哩薯仔牛肉
+Baked  curry potato fish filet,baked ,fish filet ,,potato ,rice ,curry,136,,焗咖哩薯仔鱼柳
+Baked  curry potato seafood,baked ,seafood,,potato ,rice ,curry,137,,焗咖哩薯仔海鮮
+Baked  curry potato ox tongue,baked ,ox tongue,,potato ,rice ,curry,138,,焗咖哩薯仔牛脷
+Tepangyaki shirloin steak rice,baked ,shirloin steak ,,,rice ,pepper sauce,139,,板燒黑椒西冷牛扒 
+Pan fried pork chop rice ,baked ,pork chop,,,rice ,,140,,香煎洋蔥豬扒
+Garlic chicken filet ,baked ,chicken filet ,,,rice ,garlic sauce,141,,脆皮蒜蓉雞扒
+Corn grain gillette porkchop,baked ,pork chop ,,corn ,rice ,corn grain,142,,王牌粟米吉列豬扒
+Corn grain gillette beef tenderloin,baked ,beef ,,corn ,rice ,corn grain,143,,粟米吉列牛柳
+wine terayaki chicken filet ,baked ,wine ,,,rice ,terayaki,144,,紅就燒汁雜扒
+mince beef fried rice ,baked ,mince beef,,egg,rice ,,145,,煎蛋免治牛肉
+mince beef fried spagetti,baked ,mince beef,,egg,spagetti,,146,,煎蛋免治牛肉意粉
+Satay beef instant noodles,soup,beef,,,instant noodles,,147,,沙爹牛肉麵 
+Pork chop macaroni,soup,pork chop,,,macaroni ,,148,,豬扒湯通粉
+abarlone ham macroni ,soup ,ham ,abarlone,,macaroni ,,149,? ,放鮑魚火腿通粉
+ham meat egg instant noodle ,soup,lunch meat,egg,,instant noodle,,150,,餐肉煎蛋公仔麵
+lunch meat egg instant noodle ,soup,ham ,egg,,instant noodle,,151,,火腿餐蛋公仔麵
+shredded meat macaroni,soup,shredded meat ,,,macroni ,,152,,俾製肉絲湯米粉
+sandwitch with crispy potato ,,,,,,,153,,三文治半薯皇
+french toast ,,,,,,,154,,法蘭西多士
+cheese frencg toast ,,,,,,,155,,芝士留心多士
+black trufflefrench toast,,,,,,,156,,黑鬆露西多士
+beef sandwitch ,,,,,,,157,,咸牛肉三文治
+ham sandwitch ,,,,,,,158,,火腿三文治
+lunch meat sandwitch,,,,,,,159,,午餐肉三文治
+Pork chop bun with chrispy potato ,,,,,,,160,,豬扒包 薯皇 沙律
+hot dog,,,,,,,161,,熱狗
+,,,,,,,162,,煎蛋菠蘿油

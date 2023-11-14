@@ -1,6 +1,6 @@
 from datetime import datetime
 from openai import OpenAI
-import whisper
+# import whisper
 import base64
 import numpy as np
 import asyncio
@@ -13,10 +13,12 @@ import os
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
+print(f"{api_key=}")
 client = OpenAI(
-    # api_base="https://api.gpt.tecky.ai/v1",
     api_key=api_key
+    # base_url="https://api.gpt.tecky.ai/v1"
 )
+
 
 
 
@@ -45,7 +47,9 @@ async def websocket_handler(request, ws):
                 text = await process_with_whisper(base64_data)
                 print (f"whisper respond :{text}")
                 await ws.send(json.dumps({'type': 'whisper_response', 'data': text}))
+                print("whisper response sent")
                 chatgpt_response = process_with_chatgpt(text)
+                print(f"gpt respond fm whisper :{chatgpt_response}")
                 await ws.send(json.dumps({'type': 'chatgpt_response_voice-chatbox', 'data': chatgpt_response}))
 
             elif data['type'] == 'user_message':
@@ -105,8 +109,7 @@ def process_with_chatgpt(text):
 
    
 
-def process_messageTypeB(data):
-    return "Processed data for messageTypeB"
+
 
 # app.blueprint(routes)
 app.add_websocket_route(websocket_handler, '/ws')
