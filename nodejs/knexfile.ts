@@ -5,12 +5,13 @@ dotenv.config();
 
 const config: { [key: string]: Knex.Config } = {
     development: {
-        debug: true,
+        debug: false,
         client: "postgresql",
         connection: {
             database: process.env.DB_NAME,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
+            port:parseInt(process.env.DB_PORT||"5432"),
         },
         pool: {
             min: 2,
@@ -27,6 +28,7 @@ const config: { [key: string]: Knex.Config } = {
             database: process.env.DB_NAME,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
+            port:parseInt(process.env.DB_PORT||"5432"),
         },
         pool: {
             min: 2,
@@ -43,6 +45,7 @@ const config: { [key: string]: Knex.Config } = {
             database: process.env.DB_NAME,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
+            port:parseInt(process.env.DB_PORT||"5432"),
         },
         pool: {
             min: 2,
