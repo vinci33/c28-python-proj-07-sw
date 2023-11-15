@@ -10,15 +10,8 @@ from sanic import Sanic
 from routes import routes
 from dotenv import load_dotenv
 import os
-# import langchain
-# from langchain.agents import initialize_agent
-# from langchain.agents import AgentType
-# from langchain.chat_models import ChatOpenAI
-# from langchain.prompts import MessagesPlaceholder
-# from langchain.memory import ConversationSummaryBufferMemory
-# from langchain.chains.summarize import load_summarize_chain
-# from langchain.schema import SystemMessage
-
+import langchain
+from langchain.llms import OpenAI
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 print(f"{api_key=}")
