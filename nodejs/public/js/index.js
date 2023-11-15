@@ -1,3 +1,14 @@
+window.onload = async function () {
+
+    document.querySelectorAll('.single-menu').forEach(function (e) {
+        e.addEventListener('click', function () {
+
+        });
+    });
+}
+
+
+
 let socket;
 
 function initWebSocket() {
@@ -182,6 +193,16 @@ sendChatBtn.addEventListener("click", handleChat);
 closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
 chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
 
+document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
+    singleMenu.addEventListener('mousedown', function () {
+        this.classList.add('transform'); // Add transform class to the clicked .single-menu element
+    });
+
+    singleMenu.addEventListener('mouseup', function () {
+        this.classList.remove('transform'); // Remove transform class when the mouse button is released
+        this.classList.toggle('active'); // Add active class to the clicked .single-menu element
+    });
+});
 
 const recordButton = document.querySelector("#recordButton");
 const recordButtonChatbox = document.querySelector("#recordButtonChatbox");
@@ -234,6 +255,7 @@ function stopRecording() {
 
 
 
+
 // socket.onopen = function (event) {
 //     console.log("WebSocket connection opened:", event);
 //     socket.send(JSON.stringify({ source: 1, type: 'text', data: 'Hello, server!' }));
@@ -279,4 +301,36 @@ function stopRecording() {
 
 // sendTextMessageA('Hello, server from .sendA !');
 
+{/* <div class="single-menu col-sm-4">
+<img src="../../asset/dish5.jpg" alt="">
+<div class="menu-content">
+    <h4>chicken fried salad <span>$45</span></h4>
+    <p>Lorem ipsum dolor sit met.</p>
+</div>
+</div> */}
 
+
+async function loadMenu() {
+    try {
+        let res = await fetch('/loadMenu');
+        let menu = await res.json();
+        if (menu.length == 0) {
+            throw new Error('No menu found');
+        }
+        for (let i = 0; i < menu.length; i++) {
+            let menuDiv = document.createElement('div');
+            menuDiv.classList.add('single-menu', 'col-sm-4');
+            menuDiv.innerHTML = `
+            <img src="../../asset/dish5.jpg" alt="">
+            <div class="menu-content">
+                <h4>${menu[i].name} <span>$${menu[i].price}</span></h4>
+                <p>${menu[i].description}</p>
+            </div>
+            `;
+            document.querySelector('.menu-container').appendChild(menuDiv);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+}
