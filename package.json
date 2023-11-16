@@ -1,0 +1,29 @@
+{
+  "name": "c28-bad-proj-07-sw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinci33/c28-bad-proj-07-sw.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinci33/c28-bad-proj-07-sw/issues"
+  },
+  "homepage": "https://github.com/vinci33/c28-bad-proj-07-sw#readme",
+  "dependencies": {
+    "@types/pg": "^8.10.9",
+    "knex": "^3.0.1",
+    "pg": "^8.11.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0"
+  }
+}
