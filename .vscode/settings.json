@@ -3,7 +3,9 @@
         "chatbox",
         "dotenv",
         "dtype",
+        "FAISS",
         "frombuffer",
+        "langchain",
         "openai",
         "sanic"
     ]

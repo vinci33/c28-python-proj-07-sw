@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+    --text: #f3f4f6;
+    --background: #060709;
+    --primary: #916990;
+    --secondary: #1e1a15;
+    --accent: #6b946c;
+    --border: #a19c9c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+
+
+.menu-header {
+    width: auto;
+    /* margin: 100 auto; */
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.title h4 {
+    text-transform: capitalize;
+    font-size: 80px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.title h4 span {
+    margin-top: 20px;
+    display: block;
+    font-size: 25px;
+    font-style: bold;
+    margin-bottom: -15px;
+}
+
+.title h4:before {
+    position: absolute;
+    content: "";
+    width: 100px;
+    height: 2px;
+    background-color: var(--primary);
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+
+.single-menu {
+    transition: transform 0.1s ease;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.single-menu:hover {
+    cursor: pointer;
+    border-bottom: 3px solid var(--secondary);
+    color: var(--accent);
+}
+
+.single-menu:hover h4 span {
+    color: var(--accent);
+}
+
+.single-menu.transform {
+    transform: translateY(3px);
+
+}
+
+.single-menu.active {
+    color: var(--border);
+}
+
+.single-menu.active h4 span {
+    color: var(--border);
+}
+
+/* .single-menu:nth-child(5),
+.single-menu:nth-child(6) {
+    border-bottom: 5px solid var(--secondary);
+} */
+
+.single-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.single-menu img {
+    max-width: 180px;
+    margin: 15px 0;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid var(--secondary);
+    padding: .5px;
+}
+
+.single-menu h4 {
+    text-transform: capitalize;
+    font-size: 22px;
+    border-bottom: 1px dashed var(--primary);
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+
+.menu-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.single-menu h4 span {
+    /* float: right; */
+    color: var(--secondary);
+    font-style: italic;
+}

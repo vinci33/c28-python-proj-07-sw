@@ -1,3 +1,14 @@
+window.onload = async function () {
+
+    document.querySelectorAll('.single-menu').forEach(function (e) {
+        e.addEventListener('click', function () {
+
+        });
+    });
+}
+
+
+
 let socket;
 
 function initWebSocket() {
@@ -7,10 +18,10 @@ function initWebSocket() {
         console.log("WebSocket connection opened:", event);
     };
 
-    socket.onmessage = function (event) {
+    socket.onmessage = function (event, type) {
         console.log("WebSocket message received:", event);
         const message = JSON.parse(event.data);
-        if (message.type === 'chatgpt_response') {
+        if (message.type === type) {
             console.log('Received text message: ' + message.data);
         }
     };
@@ -74,13 +85,13 @@ initWebSocket();
 console.log("Attempting to connect to WebSocket server at ws://localhost:8000/ws");
 console.log("socket:", socket);
 
-// socket.onmessage = function (event) {
-//     console.log("WebSocket message received:", event);
-//     const message = JSON.parse(event.data);
-//     if (message.type === 'whisper_response') {
-//         console.log('Received text message: ' + message.data);
-//     }
-// };
+socket.onmessage = function (event) {
+    console.log("WebSocket message received:", event);
+    const message = JSON.parse(event.data);
+    if (message.type === 'whisper_response') {
+        console.log('Received text message: ' + message.data);
+    }
+};
 
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const closeBtn = document.querySelector(".close-btn");
@@ -105,12 +116,25 @@ const generateResponse = async (chatElement, type) => {
         const messageElement = chatElement.querySelector("p");
         sendTextMessage(userMessage, 'user_message');
         messageElement.textContent = await promiseOnmessage(type);
+        console.log(`Fm generate Fun : ${messageElement.textContent}`);
         chatbox.scrollTo(0, chatbox.scrollHeight)
     } catch {
         messageElement.classList.add("error");
         messageElement.textContent = "Oops! Something went wrong. Please try again.";
     }
 }
+const generateResponseVoice = async (chatElement, type) => {
+    try {
+        const messageElement = chatElement.querySelector("p");
+        messageElement.textContent = await promiseOnmessage(type);
+        console.log(`Fm generate respond voice Fun : ${messageElement.textContent}`);
+        // chatbox.scrollTo(0, chatbox.scrollHeight)
+    } catch {
+        messageElement.classList.add("error");
+        messageElement.textContent = "Oops! Something went wrong. Please try again.";
+    }
+}
+
 const handleChat = () => {
     userMessage = chatInput.value.trim();
     if (!userMessage) return;
@@ -126,10 +150,10 @@ const handleChat = () => {
         generateResponse(incomingChatLi, 'chatgpt_response_chatbox');
     }, 600);
 }
-userMessageFmVoice = async () => {
-    await promiseOnmessage('whisper_response');
-    console.log(`Fm handle Fun : ${userMessageFmVoice}`);
-}
+// userMessageFmVoice = async () => {
+//     await promiseOnmessage('whisper_response');
+//     console.log(`Fm handle Fun : ${userMessageFmVoice}`);
+// }
 
 const handleVoiceChat = async () => {
 
@@ -138,21 +162,29 @@ const handleVoiceChat = async () => {
 
     // await new Promise(resolve => setTimeout(resolve, 600));
     const incomingVoiceLi = createChatLi("Listening...", "incoming");
-    voiceChatbox.appendChild(incomingVoiceLi);
     userMessageFmVoice = await promiseOnmessage('whisper_response');
-    console.log(`Fm handle Fun : ${userMessageFmVoice}`);
     voiceChatbox.appendChild(createChatLi(userMessageFmVoice, "outgoing"));
-    generateResponse(incomingVoiceLi, 'chatgpt_response_voice-chatbox');
+    console.log(`Fm handle Fun : ${userMessageFmVoice}`);
+    userMessage = userMessageFmVoice;
+    generateResponseVoice(incomingVoiceLi, 'chatgpt_response_voice-chatbox');
+    voiceChatbox.appendChild(incomingVoiceLi);
 
 }
+// document.querySelector("#recordButtonChatbox").addEventListener("click", handleVoiceChat);
+
 chatInput.addEventListener("input", () => {
     chatInput.style.height = `${inputInitHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
 });
+
 chatInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+    if (e.key === "Enter") {
         e.preventDefault();
-        handleChat();
+        if (!e.shiftKey) {
+            handleChat();
+        } else {
+            chatInput.value += "\n";
+        }
     }
 });
 
@@ -161,6 +193,16 @@ sendChatBtn.addEventListener("click", handleChat);
 closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
 chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
 
+document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
+    singleMenu.addEventListener('mousedown', function () {
+        this.classList.add('transform'); // Add transform class to the clicked .single-menu element
+    });
+
+    singleMenu.addEventListener('mouseup', function () {
+        this.classList.remove('transform'); // Remove transform class when the mouse button is released
+        this.classList.toggle('active'); // Add active class to the clicked .single-menu element
+    });
+});
 
 const recordButton = document.querySelector("#recordButton");
 const recordButtonChatbox = document.querySelector("#recordButtonChatbox");
@@ -197,15 +239,18 @@ function stopRecording() {
         isRecording = false;
         recordButton.classList.remove("active");
         mediaRecorder.addEventListener("stop", async () => {
+            handleVoiceChat()
             const audioBlob = new Blob(audioChunks);
             try {
                 await sendVoiceBlob(audioBlob);
+
             } catch (err) {
                 console.log("Stop recode fail:", err);
             }
         });
     }
 }
+
 
 
 
@@ -256,4 +301,36 @@ function stopRecording() {
 
 // sendTextMessageA('Hello, server from .sendA !');
 
+{/* <div class="single-menu col-sm-4">
+<img src="../../asset/dish5.jpg" alt="">
+<div class="menu-content">
+    <h4>chicken fried salad <span>$45</span></h4>
+    <p>Lorem ipsum dolor sit met.</p>
+</div>
+</div> */}
 
+
+async function loadMenu() {
+    try {
+        let res = await fetch('/loadMenu');
+        let menu = await res.json();
+        if (menu.length == 0) {
+            throw new Error('No menu found');
+        }
+        for (let i = 0; i < menu.length; i++) {
+            let menuDiv = document.createElement('div');
+            menuDiv.classList.add('single-menu', 'col-sm-4');
+            menuDiv.innerHTML = `
+            <img src="../../asset/dish5.jpg" alt="">
+            <div class="menu-content">
+                <h4>${menu[i].name} <span>$${menu[i].price}</span></h4>
+                <p>${menu[i].description}</p>
+            </div>
+            `;
+            document.querySelector('.menu-container').appendChild(menuDiv);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+}
