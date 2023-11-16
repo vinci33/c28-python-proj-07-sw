@@ -1,11 +1,6 @@
 
 window.onload = async function () {
     loadMenu();
-<<<<<<< HEAD
-    getOrderDetail();
-    document.querySelectorAll('.single-menu').forEach(function (e) {
-        e.addEventListener('click', function () {
-=======
     document.querySelector('.confirmBtn').addEventListener('click', function (e) {
         e.preventDefault();
         // getOrderDetail()
@@ -14,7 +9,6 @@ window.onload = async function () {
         console.log("confirmBtn press ");
     })
 
->>>>>>> master
 
 }
 
@@ -270,23 +264,10 @@ function stopRecording() {
 // });
 
 
-<<<<<<< HEAD
-document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
-    singleMenu.addEventListener('mousedown', function () {
-        this.classList.add('transform'); // Add transform class to the clicked .single-menu element
-    });
-
-    singleMenu.addEventListener('mouseup', function () {
-        this.classList.remove('transform'); // Remove transform class when the mouse button is released
-        this.classList.toggle('active'); // Add active class to the clicked .single-menu element
-    });
-});
-=======
 // document.querySelector('.confirmBtn').addEventListener('click', function (e) {
 //     e.preventDefault();
 //     postOrder();
 // })
->>>>>>> master
 
 async function loadMenu() {
     try {
@@ -311,8 +292,6 @@ async function loadMenu() {
 
 
         }
-<<<<<<< HEAD
-=======
         document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
             singleMenu.addEventListener('mousedown', function () {
                 this.classList.add('transform');
@@ -324,17 +303,12 @@ async function loadMenu() {
                 this.classList.toggle('active');
             });
         });
->>>>>>> master
 
     } catch (err) {
         console.log(err);
     }
 
 }
-<<<<<<< HEAD
-const confirmOrderBtn = document.querySelector('.confirm-order')
-confirmOrderBtn.addEventListener('click', postOrder);
-=======
 // async function loadMenu() {
 //     try {
 //         let res = await fetch('/loadMenu');
@@ -417,7 +391,6 @@ async function getOrderDetail() {
     return orderStaging;
 }
 
->>>>>>> master
 
 
 document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
@@ -435,19 +408,6 @@ document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
 
 async function getOrderDetail() {
     try {
-<<<<<<< HEAD
-        document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
-            singleMenu.addEventListener('mousedown', function () {
-                this.classList.add('transform'); // Add transform class to the clicked .single-menu element
-            });
-
-            singleMenu.addEventListener('mouseup', function () {
-                this.classList.remove('transform'); // Remove transform class when the mouse button is released
-                this.classList.toggle('active'); // Add active class to the clicked .single-menu element
-            });
-        });
-
-=======
         const orderDetails = await getOrderDetail();
         const orderIds = [];
         // console.log(`in post Order ${orderDetails}`);
@@ -467,7 +427,6 @@ async function getOrderDetail() {
             orderIds.push(orderId.id);
         }
         console.log(orderIds);
->>>>>>> master
     } catch (err) {
         console.log(err);
     }
@@ -508,3 +467,4 @@ async function getOrderDetail() {
             console.log(err);
         }
     }
+}
