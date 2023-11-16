@@ -1,4 +1,5 @@
 import express from 'express'
+
 import { MenuController } from './controllers/MenuController';
 import { MenuService } from './services/MenuService';
 import { knex } from './knex';

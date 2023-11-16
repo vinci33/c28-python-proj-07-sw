@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/vinci33/c28-bad-proj-07-sw#readme",
   "dependencies": {
+    "@types/express-session": "^1.17.10",
     "@types/pg": "^8.10.9",
+    "express-session": "^1.17.3",
     "knex": "^3.0.1",
     "pg": "^8.11.3",
     "xlsx": "^0.18.5"

@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import expressSession from 'express-session';
 import { MenuService } from "../services/MenuService"
 export class MenuController {
     constructor(private menuService: MenuService) {
@@ -6,15 +7,28 @@ export class MenuController {
     }
 
     getMenu = async (req: Request, res: Response) => {
-        const menus = await this.menuService.getMenus();
-        res.json(menus);
+        try {
+            const menus = await this.menuService.getMenus();
+            res.json(menus);
+        } catch (err) {
+            console.error(err);
+            res.status(400).json({ success: false, msg: "unable to get menu" });
+        }
     }
 
     postOrder = async (req: Request, res: Response) => {
-        const userId = 1
-        const foodId = req.body.foodId
-        const drinkId = req.body.drinkId
-        const qty = req.body.qty
-        await this.menuService.postOrder(userId, foodId, drinkId, qty)
+        try {
+
+            const foodId = req.body.food_id
+            const drinkId = req.body.drink_id
+            const qty = req.body.quantity
+            // console.log({ foodId, drinkId, qty })
+            const orderItemId = await this.menuService.postOrder(foodId, drinkId, qty)
+            // console.log(orderItemId)
+            res.json(orderItemId)
+        } catch (err) {
+            console.error(err);
+            res.status(400).json({ error: 'An error occurred while posting the order.' });
+        }
     }
-}
+} 
