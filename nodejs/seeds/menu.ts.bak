@@ -1,0 +1,42 @@
+import knex from 'knex';
+import xlsx from 'xlsx';
+import path from 'path';
+import { SheetData } from '../model';
+import { Knex } from "knex";
+
+
+export async function seed(knexInstance: Knex): Promise<void> {
+  await knexInstance('menu_foods').del();
+  await knexInstance('menu_drinks').del();
+
+  try {
+    // Read the Excel file
+    const workbook = xlsx.readFile(path.join(__dirname, '..', 'data', 'Vector_menu.xlsx'));
+
+    // Get the worksheet by its index or name
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+
+    // Convert the worksheet to JSON
+    const jsonData = xlsx.utils.sheet_to_json(worksheet) as SheetData[];
+
+    for (const row of jsonData) {
+      // Customize the Knex insert statements based on your table structure
+      await knexInstance('menu_foods').insert({
+        column1: row.column1,
+        column2: row.column2,
+        column3: row.column3,
+        column4: row.column4,
+        column5: row.column5,
+        column6: row.column6,
+        column7: row.column7,
+        column8: row.column8,
+      });
+    }
+
+    console.log('Data insertion completed successfully.');
+  } catch (error) {
+    console.error('Error while inserting data:', error);
+  } finally {
+    await knexInstance.destroy(); // Close the database connection
+  }
+}
