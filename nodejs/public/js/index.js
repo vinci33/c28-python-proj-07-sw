@@ -288,9 +288,6 @@ async function loadMenu() {
             </div>
             `;
             document.querySelector('.menu-container').appendChild(menuDiv);
-            getOrderDetail();
-
-
         }
         document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
             singleMenu.addEventListener('mousedown', function () {
@@ -392,21 +389,7 @@ async function getOrderDetail() {
 }
 
 
-
-document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
-    singleMenu.addEventListener('mousedown', function () {
-        this.classList.add('transform'); // Add transform class to the clicked .single-menu element
-    });
-
-    singleMenu.addEventListener('mouseup', function () {
-        this.classList.remove('transform'); // Remove transform class when the mouse button is released
-        this.classList.toggle('active'); // Add active class to the clicked .single-menu element
-    });
-});
-
-
-
-async function getOrderDetail() {
+async function postOrder() {
     try {
         const orderDetails = await getOrderDetail();
         const orderIds = [];
@@ -429,42 +412,5 @@ async function getOrderDetail() {
         console.log(orderIds);
     } catch (err) {
         console.log(err);
-    }
-
-    async function postOrder() {
-        try {
-            id = confirmOrderBtn.getAttribute('id');
-
-            const orderDetails = getOrderDetail();
-            const orderId = await fetch('/postOrder', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    foodId: "",
-                    drinkId: "",
-                    quantity: "",
-                })
-            });
-            return orderId
-
-
-
-            // for (let i = 0; i < menu.length; i++) {
-            //     let menuDiv = document.createElement('div');
-            //     menuDiv.classList.add('single-menu', 'col-sm-4');
-            //     menuDiv.innerHTML = `
-            //     <img src="../../asset/dish5.jpg" alt="">
-            //     <div class="menu-content">
-            //         <h4>${menu[i].name} <span>$${menu[i].price}</span></h4>
-            //         <p>${menu[i].description}</p>
-            //     </div>
-            //     `;
-            //     document.querySelector('.menu-container').appendChild(menuDiv);
-            // }
-        } catch (err) {
-            console.log(err);
-        }
     }
 }
