@@ -322,10 +322,10 @@ async function loadMenu() {
             let menuDiv = document.createElement('div');
             menuDiv.classList.add('single-menu', 'col-sm-4');
             menuDiv.innerHTML = `
-            <img src="${menu[i].image}" alt="">
-            <div class="menu-content">
-                <h4>${menu[i].name} <span>$${menu[i].price}</span></h4>
-                <p>${menu[i].category}</p>
+            <img src="${menu[i].food_image}" alt="">
+            <div class="menu-content" id = ${menu[i].id}>
+                <h4>${menu[i].food_name} <span>$${menu[i].food_price}</span></h4>
+                <p>${menu[i].food_category}</p>
             </div>
             `;
             document.querySelector('.menu-container').appendChild(menuDiv);
