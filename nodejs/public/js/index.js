@@ -193,16 +193,7 @@ sendChatBtn.addEventListener("click", handleChat);
 closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
 chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
 
-document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
-    singleMenu.addEventListener('mousedown', function () {
-        this.classList.add('transform'); // Add transform class to the clicked .single-menu element
-    });
 
-    singleMenu.addEventListener('mouseup', function () {
-        this.classList.remove('transform'); // Remove transform class when the mouse button is released
-        this.classList.toggle('active'); // Add active class to the clicked .single-menu element
-    });
-});
 
 const recordButton = document.querySelector("#recordButton");
 const recordButtonChatbox = document.querySelector("#recordButtonChatbox");
@@ -309,6 +300,16 @@ function stopRecording() {
 </div>
 </div> */}
 
+// document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
+//     singleMenu.addEventListener('mousedown', function () {
+//         this.classList.add('transform'); // Add transform class to the clicked .single-menu element
+//     });
+
+//     singleMenu.addEventListener('mouseup', function () {
+//         this.classList.remove('transform'); // Remove transform class when the mouse button is released
+//         this.classList.toggle('active'); // Add active class to the clicked .single-menu element
+//     });
+// });
 
 async function loadMenu() {
     try {
@@ -329,7 +330,19 @@ async function loadMenu() {
             </div>
             `;
             document.querySelector('.menu-container').appendChild(menuDiv);
+
+            document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
+                singleMenu.addEventListener('mousedown', function () {
+                    this.classList.add('transform'); // Add transform class to the clicked .single-menu element
+                });
+
+                singleMenu.addEventListener('mouseup', function () {
+                    this.classList.remove('transform'); // Remove transform class when the mouse button is released
+                    this.classList.toggle('active'); // Add active class to the clicked .single-menu element
+                });
+            });
         }
+
     } catch (err) {
         console.log(err);
     }
