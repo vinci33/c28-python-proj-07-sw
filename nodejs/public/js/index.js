@@ -1,5 +1,5 @@
 window.onload = async function () {
-
+    loadMenu();
     document.querySelectorAll('.single-menu').forEach(function (e) {
         e.addEventListener('click', function () {
 
@@ -314,6 +314,7 @@ async function loadMenu() {
     try {
         let res = await fetch('/loadMenu');
         let menu = await res.json();
+        console.log(menu);
         if (menu.length == 0) {
             throw new Error('No menu found');
         }
@@ -321,10 +322,10 @@ async function loadMenu() {
             let menuDiv = document.createElement('div');
             menuDiv.classList.add('single-menu', 'col-sm-4');
             menuDiv.innerHTML = `
-            <img src="../../asset/dish5.jpg" alt="">
+            <img src="${menu[i].image}" alt="">
             <div class="menu-content">
                 <h4>${menu[i].name} <span>$${menu[i].price}</span></h4>
-                <p>${menu[i].description}</p>
+                <p>${menu[i].category}</p>
             </div>
             `;
             document.querySelector('.menu-container').appendChild(menuDiv);
@@ -333,4 +334,39 @@ async function loadMenu() {
         console.log(err);
     }
 
+}
+
+async function postOrder() {
+    try {
+        const orderDetails = getOrderDetail();
+        const orderId = await fetch('/postOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                foodId: "",
+                drinkId: "",
+                quantity: "",
+            })
+        });
+        return orderId
+
+
+
+        // for (let i = 0; i < menu.length; i++) {
+        //     let menuDiv = document.createElement('div');
+        //     menuDiv.classList.add('single-menu', 'col-sm-4');
+        //     menuDiv.innerHTML = `
+        //     <img src="../../asset/dish5.jpg" alt="">
+        //     <div class="menu-content">
+        //         <h4>${menu[i].name} <span>$${menu[i].price}</span></h4>
+        //         <p>${menu[i].description}</p>
+        //     </div>
+        //     `;
+        //     document.querySelector('.menu-container').appendChild(menuDiv);
+        // }
+    } catch (err) {
+        console.log(err);
+    }
 }
