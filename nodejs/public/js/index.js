@@ -1,10 +1,15 @@
+
 window.onload = async function () {
     loadMenu();
-    document.querySelectorAll('.single-menu').forEach(function (e) {
-        e.addEventListener('click', function () {
+    document.querySelector('.confirmBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+        // getOrderDetail()
+        postOrder();
 
-        });
-    });
+        console.log("confirmBtn press ");
+    })
+
+
 }
 
 
@@ -246,70 +251,23 @@ function stopRecording() {
 
 
 
-
-// socket.onopen = function (event) {
-//     console.log("WebSocket connection opened:", event);
-//     socket.send(JSON.stringify({ source: 1, type: 'text', data: 'Hello, server!' }));
-//     // socket.send(JSON.stringify({ source: 'A', type: 'text', data: "test1" }))
-//     sendTextMessageA('Hello, server from .sendA !')
-// };
-
-// socket.onmessage = function (event) {
-//     console.log("WebSocket message received:", event);
-//     const message = JSON.parse(event.data);
-//     if (message.type === 'messageTypeA_response') {
-//         console.log('Received text message: ' + message.data);
-//     }
-// };
-
-
-// function sendTextMessage(text, source) {
-//     socket.send(JSON.stringify({ source: source, type: 'text', data: text }));
-// }
-// // sendTextMessage('Hello, server from .send !', 'A');
-
-// function sendTextMessageA(text) {
-//     socket.send(JSON.stringify({ source: 'A', type: 'text', data: text }));
-// }
-// ;
-
-// socket.onmessage = function (event) {
-//     console.log("WebSocket message received:", event);
-//     const message = JSON.parse(event.data);
-//     if (message.type === 'messageTypeA_response') {
-//         console.log('Received text message: ' + message.data);
-//     }
-// };
-
-// async function sendVoiceBlob(blob) {
-//     const arrayBuffer = await blob.arrayBuffer();
-//     socket.send(arrayBuffer);
-// }
-
-// socket.onerror = function (event) {
-//     console.error("WebSocket error:", event);
-// };
-
-// sendTextMessageA('Hello, server from .sendA !');
-
-{/* <div class="single-menu col-sm-4">
-<img src="../../asset/dish5.jpg" alt="">
-<div class="menu-content">
-    <h4>chicken fried salad <span>$45</span></h4>
-    <p>Lorem ipsum dolor sit met.</p>
-</div>
-</div> */}
-
 // document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
 //     singleMenu.addEventListener('mousedown', function () {
-//         this.classList.add('transform'); // Add transform class to the clicked .single-menu element
+//         this.classList.add('transform'); // Add transform class to the clicked .single-menu element	
 //     });
 
+
 //     singleMenu.addEventListener('mouseup', function () {
-//         this.classList.remove('transform'); // Remove transform class when the mouse button is released
-//         this.classList.toggle('active'); // Add active class to the clicked .single-menu element
+//         this.classList.remove('transform'); // Remove transform class when the mouse button is released	
+//         this.classList.toggle('active'); // Add active class to the clicked .single-menu element	
 //     });
 // });
+
+
+// document.querySelector('.confirmBtn').addEventListener('click', function (e) {
+//     e.preventDefault();
+//     postOrder();
+// })
 
 async function loadMenu() {
     try {
@@ -325,60 +283,133 @@ async function loadMenu() {
             menuDiv.innerHTML = `
             <img src="${menu[i].food_image}" alt="">
             <div class="menu-content" id = ${menu[i].id}>
-                <h4>${menu[i].food_name} <span>$${menu[i].food_price}</span></h4>
-                <p>${menu[i].food_category}</p>
+                <h4 class="food_name">${menu[i].food_name} <span class="food_price">$${menu[i].food_price}</span></h4>
+                <p class="food_category">${menu[i].food_category}</p>
             </div>
             `;
             document.querySelector('.menu-container').appendChild(menuDiv);
-
-            document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
-                singleMenu.addEventListener('mousedown', function () {
-                    this.classList.add('transform'); // Add transform class to the clicked .single-menu element
-                });
-
-                singleMenu.addEventListener('mouseup', function () {
-                    this.classList.remove('transform'); // Remove transform class when the mouse button is released
-                    this.classList.toggle('active'); // Add active class to the clicked .single-menu element
-                });
-            });
         }
+        document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
+            singleMenu.addEventListener('mousedown', function () {
+                this.classList.add('transform');
+            });
+
+
+            singleMenu.addEventListener('mouseup', function () {
+                this.classList.remove('transform');
+                this.classList.toggle('active');
+            });
+        });
 
     } catch (err) {
         console.log(err);
     }
 
 }
+// async function loadMenu() {
+//     try {
+//         let res = await fetch('/loadMenu');
+//         let menu = await res.json();
+//         console.log(menu);
+//         if (menu.length == 0) {
+//             throw new Error('No menu found');
+//         }
+//         for (let i = 0; i < menu.length; i++) {
+//             let menuDiv = document.createElement('div');
+//             menuDiv.classList.add('single-menu', 'col-sm-4');
+//             menuDiv.dataset.id = menu[i].id; // Store the food id in a data attribute
+//             menuDiv.dataset.quantity = 0; // Initialize the quantity to 0
+//             menuDiv.innerHTML = `
+//             <img src="${menu[i].food_image}" alt="">
+//             <div class="menu-content">
+//                 <h4 class="food_name">${menu[i].food_name} <span class="food_price">$${menu[i].food_price}</span></h4>
+//                 <p class="food_category">${menu[i].food_category}</p>
+//             </div>
+//             <div class="quantity-control">
+//                 <button class="decrease">-</button>
+//                 <span class="quantity">0</span>
+//                 <button class="increase">+</button>
+//             </div>
+//             `;
+//             document.querySelector('.menu-container').appendChild(menuDiv);
+//         }
+//         document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
+//             const reduceBtn = singleMenu.querySelector(".decrease");
+//             const addBtn = singleMenu.querySelector(".increase");
+//             const quantityEle = singleMenu.querySelector(".quantity");
+
+//             if (!reduceBtn || !addBtn || !quantityEle) {
+//                 throw new Error("Missing button elements");
+//             }
+
+//             let quantity = parseInt(quantityEle.dataset.quantity);
+//             reduceBtn.addEventListener("click", () => {
+//                 if (quantity > 0) {
+//                     quantity--;
+//                     quantityEle.innerHTML = quantity;
+//                     singleMenu.dataset.quantity = quantity;
+//                 }
+//             });
+
+//             addBtn.addEventListener("click", () => {
+//                 quantity++;
+//                 quantityEle.innerHTML = quantity;
+//                 singleMenu.dataset.quantity = quantity;
+//             });
+//         });
+
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
+
+
+let orderStaging = [];
+console.log(orderStaging);
+
+async function getOrderDetail() {
+    console.log(orderStaging);
+    confirmBtn = document.querySelector('.confirmBtn');
+    document.querySelectorAll('.single-menu').forEach(function (e) {
+        let orderId = e.querySelector('.menu-content').id;
+        if (e.classList.contains('active')) {
+            if (!orderStaging.includes(orderId)) {
+                orderStaging.push(orderId);
+            }
+        } else {
+            orderStaging = orderStaging.filter(function (id) {
+                return id !== orderId;
+            });
+        }
+        e.classList.remove('active');
+
+    });
+    // console.log(orderStaging);
+    return orderStaging;
+}
+
 
 async function postOrder() {
     try {
-        const orderDetails = getOrderDetail();
-        const orderId = await fetch('/postOrder', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                foodId: "",
-                drinkId: "",
-                quantity: "",
-            })
-        });
-        return orderId
-
-
-
-        // for (let i = 0; i < menu.length; i++) {
-        //     let menuDiv = document.createElement('div');
-        //     menuDiv.classList.add('single-menu', 'col-sm-4');
-        //     menuDiv.innerHTML = `
-        //     <img src="../../asset/dish5.jpg" alt="">
-        //     <div class="menu-content">
-        //         <h4>${menu[i].name} <span>$${menu[i].price}</span></h4>
-        //         <p>${menu[i].description}</p>
-        //     </div>
-        //     `;
-        //     document.querySelector('.menu-container').appendChild(menuDiv);
-        // }
+        const orderDetails = await getOrderDetail();
+        const orderIds = [];
+        // console.log(`in post Order ${orderDetails}`);
+        for (let food_id of orderDetails) {
+            const response = await fetch('/postOrder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    food_id: food_id,
+                    drink_id: 1,
+                    quantity: 1,
+                })
+            });
+            const orderId = await response.json();
+            orderIds.push(orderId.id);
+        }
+        console.log(orderIds);
     } catch (err) {
         console.log(err);
     }
