@@ -1,0 +1,398 @@
+[
+    {
+        "﻿category ": "麵",
+        "": "豬肉類",
+        "chinese_food_name": "銀芽肉絲炒麵",
+        "price": "60"
+    },
+    {
+        "﻿category ": "河粉",
+        "": "海鮮類",
+        "chinese_food_name": "菜遠魚柳炒河",
+        "price": "60"
+    },
+    {
+        "﻿category ": "炒飯",
+        "": "牛肉類",
+        "chinese_food_name": "美極生炒牛肉飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "意粉",
+        "": "牛肉類",
+        "chinese_food_name": "黑椒牛肉炒意粉",
+        "price": "60"
+    },
+    {
+        "﻿category ": "炒飯",
+        "": "豬肉類",
+        "chinese_food_name": "印尼炒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "炒飯",
+        "": "海鮮類",
+        "chinese_food_name": "泰式菠蘿海鮮炒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "米粉",
+        "": "素食",
+        "chinese_food_name": "清酒炒米粉",
+        "price": "60"
+    },
+    {
+        "﻿category ": "米粉",
+        "": "豬肉類",
+        "chinese_food_name": "星洲炒米",
+        "price": "60"
+    },
+    {
+        "﻿category ": "炒飯",
+        "": "海鮮類",
+        "chinese_food_name": "日式鰻魚炒飯",
+        "price": "65"
+    },
+    {
+        "﻿category ": "河粉",
+        "": "牛肉類",
+        "chinese_food_name": "乾炒牛河",
+        "price": "65"
+    },
+    {
+        "﻿category ": "炒飯",
+        "": "豬肉類",
+        "chinese_food_name": "楊州炒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "炒飯",
+        "": "豬肉類",
+        "chinese_food_name": "西炒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "河粉",
+        "": "牛肉類",
+        "chinese_food_name": "沙爹牛肉炒可",
+        "price": "65"
+    },
+    {
+        "﻿category ": "烏冬",
+        "": "豬肉類",
+        "chinese_food_name": "鐵板豬扒烏冬",
+        "price": "65"
+    },
+    {
+        "﻿category ": "公仔麵",
+        "": "豬肉類",
+        "chinese_food_name": "鐵板豬扒炒公仔麵",
+        "price": "60"
+    },
+    {
+        "﻿category ": "公仔麵",
+        "": "牛肉類",
+        "chinese_food_name": "鐵板牛肉炒公仔麵",
+        "price": "60"
+    },
+    {
+        "﻿category ": "公仔麵",
+        "": "海鮮類",
+        "chinese_food_name": "鐵板海鮮炒公仔麵",
+        "price": "60"
+    },
+    {
+        "﻿category ": "烏冬",
+        "": "海鮮類",
+        "chinese_food_name": "鐵板海鮮炒烏冬",
+        "price": "65"
+    },
+    {
+        "﻿category ": "米粉",
+        "": "豬肉類",
+        "chinese_food_name": "榨菜肉絲炆米",
+        "price": "65"
+    },
+    {
+        "﻿category ": "飯",
+        "": "海鮮類",
+        "chinese_food_name": "香蔥蝦仁炒滑蛋飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "飯",
+        "": "豬肉類",
+        "chinese_food_name": "芙蓉蛋飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "炒飯",
+        "": "雞肉類",
+        "chinese_food_name": "香蔥鹹魚雞粒炒飯",
+        "price": "65"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "豬肉類",
+        "chinese_food_name": "招牌焗鮮茄豬扒飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "牛肉類",
+        "chinese_food_name": "焗鮮茄牛脷飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "牛肉類",
+        "chinese_food_name": "焗鮮茄芝士肉醬腸仔飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "雞肉類",
+        "chinese_food_name": "焗雞扒飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "海鮮類",
+        "chinese_food_name": "焗芝士海鮮飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "海鮮類",
+        "chinese_food_name": "焗芝士魚柳飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "飯",
+        "": "牛肉類",
+        "chinese_food_name": "黑椒西冷牛扒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "飯",
+        "": "雞肉類",
+        "chinese_food_name": "焗黑椒雞扒飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "飯",
+        "": "豬肉類",
+        "chinese_food_name": "咖哩薯仔豬扒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "雞肉類",
+        "chinese_food_name": "焗咖哩薯仔雞扒飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "牛肉類",
+        "chinese_food_name": "焗咖哩薯仔牛肉飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "海鮮類",
+        "chinese_food_name": "焗咖哩薯仔鱼柳飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "海鮮類",
+        "chinese_food_name": "焗咖哩薯仔海鮮飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "焗飯",
+        "": "牛肉類",
+        "chinese_food_name": "焗咖哩薯仔牛脷飯",
+        "price": "75"
+    },
+    {
+        "﻿category ": "飯",
+        "": "牛肉類",
+        "chinese_food_name": "板燒黑椒西冷牛扒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "飯",
+        "": "豬肉類",
+        "chinese_food_name": "香煎洋蔥豬扒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "飯",
+        "": "雞肉類",
+        "chinese_food_name": "脆皮蒜蓉雞扒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "飯",
+        "": "豬肉類",
+        "chinese_food_name": "王牌粟米吉列豬扒飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "飯",
+        "": "牛肉類",
+        "chinese_food_name": "粟米吉列牛柳飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "飯",
+        "": "牛肉類",
+        "chinese_food_name": "煎蛋免治牛肉飯",
+        "price": "60"
+    },
+    {
+        "﻿category ": "意粉",
+        "": "牛肉類",
+        "chinese_food_name": "煎蛋免治牛肉意粉",
+        "price": "60"
+    },
+    {
+        "﻿category ": "公仔麵",
+        "": "牛肉類",
+        "chinese_food_name": "沙爹牛肉麵 ",
+        "price": "45"
+    },
+    {
+        "﻿category ": "通粉",
+        "": "豬肉類",
+        "chinese_food_name": "豬扒湯通粉",
+        "price": "45"
+    },
+    {
+        "﻿category ": "通粉",
+        "": "豬肉類",
+        "chinese_food_name": "火腿通粉",
+        "price": "45"
+    },
+    {
+        "﻿category ": "公仔麵",
+        "": "豬肉類",
+        "chinese_food_name": "餐肉煎蛋公仔麵",
+        "price": "45"
+    },
+    {
+        "﻿category ": "公仔麵",
+        "": "豬肉類",
+        "chinese_food_name": "火腿餐蛋公仔麵",
+        "price": "45"
+    },
+    {
+        "﻿category ": "米粉",
+        "": "豬肉類",
+        "chinese_food_name": "俾製肉絲湯米粉",
+        "price": "45"
+    },
+    {
+        "﻿category ": "薯條",
+        "": "素食",
+        "chinese_food_name": "薯皇",
+        "price": "35"
+    },
+    {
+        "﻿category ": "麵包",
+        "": "素食",
+        "chinese_food_name": "法蘭西多士",
+        "price": "35"
+    },
+    {
+        "﻿category ": "麵包",
+        "": "素食",
+        "chinese_food_name": "芝士留心多士",
+        "price": "40"
+    },
+    {
+        "﻿category ": "麵包",
+        "": "素食",
+        "chinese_food_name": "黑鬆露西多士",
+        "price": "40"
+    },
+    {
+        "﻿category ": "麵包",
+        "": "牛肉類",
+        "chinese_food_name": "咸牛肉三文治",
+        "price": "28"
+    },
+    {
+        "﻿category ": "麵包",
+        "": "雞肉類",
+        "chinese_food_name": "火腿三文治",
+        "price": "28"
+    },
+    {
+        "﻿category ": "麵包",
+        "": "雞肉類",
+        "chinese_food_name": "午餐肉三文治",
+        "price": "28"
+    },
+    {
+        "﻿category ": "薯條",
+        "": "雞肉類",
+        "chinese_food_name": "豬扒包 薯皇 沙律",
+        "price": "35"
+    },
+    {
+        "﻿category ": "麵包",
+        "": "雞肉類",
+        "chinese_food_name": "熱狗",
+        "price": "20"
+    },
+    {
+        "﻿category ": "麵包",
+        "": "素食",
+        "chinese_food_name": "煎蛋菠蘿油",
+        "price": "25"
+    },
+    {
+        "﻿category ": "",
+        "": "",
+        "chinese_food_name": "",
+        "price": ""
+    },
+    {
+        "﻿category ": "",
+        "": "",
+        "chinese_food_name": "",
+        "price": ""
+    },
+    {
+        "﻿category ": "",
+        "": "",
+        "chinese_food_name": "",
+        "price": ""
+    },
+    {
+        "﻿category ": "",
+        "": "",
+        "chinese_food_name": "",
+        "price": ""
+    },
+    {
+        "﻿category ": "",
+        "": "",
+        "chinese_food_name": "",
+        "price": ""
+    },
+    {
+        "﻿category ": "",
+        "": "",
+        "chinese_food_name": "",
+        "price": ""
+    },
+    {
+        "﻿category ": "",
+        "": "",
+        "chinese_food_name": "",
+        "price": ""
+    }
+]

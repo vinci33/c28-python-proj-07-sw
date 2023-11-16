@@ -38,17 +38,24 @@ info_db = FAISS.from_documents(documents_info, embeddings)
 
 def retrieve_info(query):
     try:
-        similar_response = info_db.similarity_search(query, k=2)
+        similar_response = info_db.similarity_search(query, k=3)
         print(similar_response)
         page_contents_array = [doc.page_content for doc in similar_response]
-        return page_contents_array
+        page_contents  = [page_contents_array[0].split('chinese_food_name: ')[1].split('\n')[0]]
+       
+        print(type(page_contents_array))
+        return page_contents
+    
+        
     except Exception as err:
         print(f"retrieve_info error: {str(err)}")
 
-def retrieve_menu(query, search_result):
+
+
+def retrieve_menu(query, search_result=1):
     try:
         similar_response = menu_db.similarity_search(query, k=search_result)
-        print(similar_response)
+        # print(similar_response)
         page_contents_array = [doc.page_content for doc in similar_response]
         return page_contents_array
     except Exception as err:
@@ -91,6 +98,19 @@ def order_checking(order_items):
             'message': f"order_checking error: {str(err)}",
             'order_item': None
         }
+# def check_after_retrieve (order_item: str,page_contents_array :list):
+#     try:
+#         checked = []
+#         for item in page_contents_array:
+#             lines = item.split('\n')
+#         for line in lines:
+#             if line.startswith('chinese_food_name:'):
+#                 food_name = line[len('chinese_food_name:'):].strip()
+        
+#         return checked
+#     except Exception as err:
+#         print(f"check_after_retrieve error: {str(err)}") 
+
 
 def notebook(orders):
     try:
@@ -113,4 +133,4 @@ def notebook(orders):
     except Exception as err:
         print(f"notebook error: {str(err)}")
 
-# print(retrieve_info("乾炒牛河"))
+print(f"return answer{retrieve_menu('肉絲炒麵')}")

@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 import os
 import langchain
 from langchain.llms import OpenAI
+
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 print(f"{api_key=}")
