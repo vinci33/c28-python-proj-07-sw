@@ -48,14 +48,14 @@ export async function seed(knex: Knex): Promise<void> {
       food_name: "星洲炒米",
       food_price: 60,
       food_category: "海鮮類",
-      food_image:"/asset/blog-pattern-bg.png"
+      food_image:"/asset/blog-pattern-bg.jpg"
      
     },
     {
       food_name: "日式鰻魚炒飯 ",
       food_price: 60,
       food_category: "海鮮類",
-      food_image:"/asset/bg_1.png"
+      food_image:"/asset/bg_1.jpg"
      
     },
     {
