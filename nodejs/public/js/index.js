@@ -1,4 +1,3 @@
-
 window.onload = async function () {
     loadMenu();
     document.querySelector('.confirmBtn').addEventListener('click', function (e) {
@@ -14,7 +13,7 @@ window.onload = async function () {
 
 
 
-let socket;
+let socket; 
 
 function initWebSocket() {
     socket = new WebSocket("ws://localhost:8000/ws");
