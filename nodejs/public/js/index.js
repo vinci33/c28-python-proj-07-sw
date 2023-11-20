@@ -206,6 +206,8 @@ recordButton.addEventListener("touchstart", startRecording);
 recordButton.addEventListener("touchend", stopRecording);
 recordButton.addEventListener("mousedown", startRecording);
 recordButton.addEventListener("mouseup", stopRecording);
+const confirmButton = document.querySelector('.confirmButton');
+
 let mediaRecorder;
 let audioChunks = [];
 let isRecording = false;
@@ -392,6 +394,13 @@ async function getOrderDetail() {
 async function postOrder() {
     try {
         const orderDetails = await getOrderDetail();
+        confirmBtn.classList.add('active');
+        // confirmButton.addEventListener("touchend", function () {
+        //     confirmBtn.classList.remove('active');
+        // })
+        // confirmButton.addEventListener("mouseup", function () {
+        //     confirmBtn.classList.remove('active');
+        // })
         const orderIds = [];
         // console.log(`in post Order ${orderDetails}`);
         for (let food_id of orderDetails) {
@@ -407,8 +416,10 @@ async function postOrder() {
                 })
             });
             const orderId = await response.json();
+            console.log(orderId);
             orderIds.push(orderId.id);
         }
+
         console.log(orderIds);
     } catch (err) {
         console.log(err);

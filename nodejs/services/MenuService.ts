@@ -32,7 +32,7 @@ export class MenuService {
             food_id: food_id,
             drink_id: drink_id,
             quantity: quantity
-        })
+        }).returning("id")
         return orderItemId
     }
 }

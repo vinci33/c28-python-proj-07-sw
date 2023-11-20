@@ -24,8 +24,8 @@ export class MenuController {
             const qty = req.body.quantity
             // console.log({ foodId, drinkId, qty })
             const orderItemId = await this.menuService.postOrder(foodId, drinkId, qty)
-            // console.log(orderItemId)
-            res.json(orderItemId)
+            console.log(orderItemId)
+            res.json(orderItemId[0])
         } catch (err) {
             console.error(err);
             res.status(400).json({ error: 'An error occurred while posting the order.' });
