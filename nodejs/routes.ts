@@ -14,3 +14,5 @@ routes.get('/loadMenu', menuController.getMenu) // http://localhost:8080/menus
 // routes.get('/test', openaiController.test)
 
 routes.post('/postOrder', menuController.postOrder) // http://localhost:8080/menus
+
+routes.get('/loadOrder', menuController.getOrderedDetails) // http://localhost:8080/menus

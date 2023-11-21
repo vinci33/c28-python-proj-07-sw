@@ -1,10 +1,17 @@
 
 window.onload = async function () {
+    if (!window.location.search.includes('table_id')) {
+        window.location.search = "?table_id=1";
+    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const tableId = urlParams.get('table_id');
+    console.log(tableId);
     loadMenu();
-    document.querySelector('.confirmBtn').addEventListener('click', function (e) {
+    document.querySelector('.confirmBtn').addEventListener('click', async function (e) {
         e.preventDefault();
-        // getOrderDetail()
-        postOrder();
+        loadOrder()
+        // console.log(orderIds);
+        // postOrder();
 
         console.log("confirmBtn press ");
     })
@@ -155,10 +162,7 @@ const handleChat = () => {
         generateResponse(incomingChatLi, 'chatgpt_response_chatbox');
     }, 600);
 }
-// userMessageFmVoice = async () => {
-//     await promiseOnmessage('whisper_response');
-//     console.log(`Fm handle Fun : ${userMessageFmVoice}`);
-// }
+
 
 const handleVoiceChat = async () => {
 
@@ -250,38 +254,31 @@ function stopRecording() {
 }
 
 
-
-
-
-// document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
-//     singleMenu.addEventListener('mousedown', function () {
-//         this.classList.add('transform'); // Add transform class to the clicked .single-menu element	
-//     });
-
-
-//     singleMenu.addEventListener('mouseup', function () {
-//         this.classList.remove('transform'); // Remove transform class when the mouse button is released	
-//         this.classList.toggle('active'); // Add active class to the clicked .single-menu element	
-//     });
-// });
-
-
-// document.querySelector('.confirmBtn').addEventListener('click', function (e) {
-//     e.preventDefault();
-//     postOrder();
-// })
+confirmBtn = document.querySelector('.confirmBtn');
+confirmBtn.addEventListener("mousedown", function () {
+    confirmBtn.classList.add('active');
+})
+confirmBtn.addEventListener("touchstart", function () {
+    confirmBtn.classList.add('active');
+})
+confirmBtn.addEventListener("touchend", function () {
+    confirmBtn.classList.remove('active');
+})
+confirmBtn.addEventListener("mouseup", function () {
+    confirmBtn.classList.remove('active');
+})
 
 async function loadMenu() {
     try {
         let res = await fetch('/loadMenu');
         let menu = await res.json();
-        console.log(menu);
         if (menu.length == 0) {
             throw new Error('No menu found');
         }
         for (let i = 0; i < menu.length; i++) {
             let menuDiv = document.createElement('div');
             menuDiv.classList.add('single-menu', 'col-sm-4');
+            menuDiv.dataset.foodId = menu[i].id;
             menuDiv.innerHTML = `
             <img src="${menu[i].food_image}" alt="">
             <div class="menu-content" id = ${menu[i].id}>
@@ -296,10 +293,10 @@ async function loadMenu() {
                 this.classList.add('transform');
             });
 
-
             singleMenu.addEventListener('mouseup', function () {
                 this.classList.remove('transform');
                 this.classList.toggle('active');
+                food_id = this.querySelector('.menu-content').id;
             });
         });
 
@@ -308,110 +305,79 @@ async function loadMenu() {
     }
 
 }
-// async function loadMenu() {
-//     try {
-//         let res = await fetch('/loadMenu');
-//         let menu = await res.json();
-//         console.log(menu);
-//         if (menu.length == 0) {
-//             throw new Error('No menu found');
-//         }
-//         for (let i = 0; i < menu.length; i++) {
-//             let menuDiv = document.createElement('div');
-//             menuDiv.classList.add('single-menu', 'col-sm-4');
-//             menuDiv.dataset.id = menu[i].id; // Store the food id in a data attribute
-//             menuDiv.dataset.quantity = 0; // Initialize the quantity to 0
-//             menuDiv.innerHTML = `
-//             <img src="${menu[i].food_image}" alt="">
-//             <div class="menu-content">
-//                 <h4 class="food_name">${menu[i].food_name} <span class="food_price">$${menu[i].food_price}</span></h4>
-//                 <p class="food_category">${menu[i].food_category}</p>
-//             </div>
-//             <div class="quantity-control">
-//                 <button class="decrease">-</button>
-//                 <span class="quantity">0</span>
-//                 <button class="increase">+</button>
-//             </div>
-//             `;
-//             document.querySelector('.menu-container').appendChild(menuDiv);
-//         }
-//         document.querySelectorAll('.single-menu').forEach(function (singleMenu) {
-//             const reduceBtn = singleMenu.querySelector(".decrease");
-//             const addBtn = singleMenu.querySelector(".increase");
-//             const quantityEle = singleMenu.querySelector(".quantity");
-
-//             if (!reduceBtn || !addBtn || !quantityEle) {
-//                 throw new Error("Missing button elements");
-//             }
-
-//             let quantity = parseInt(quantityEle.dataset.quantity);
-//             reduceBtn.addEventListener("click", () => {
-//                 if (quantity > 0) {
-//                     quantity--;
-//                     quantityEle.innerHTML = quantity;
-//                     singleMenu.dataset.quantity = quantity;
-//                 }
-//             });
-
-//             addBtn.addEventListener("click", () => {
-//                 quantity++;
-//                 quantityEle.innerHTML = quantity;
-//                 singleMenu.dataset.quantity = quantity;
-//             });
-//         });
-
-//     } catch (err) {
-//         console.log(err);
-//     }
-// }
-
-
-let orderStaging = [];
-console.log(orderStaging);
 
 async function getOrderDetail() {
-    console.log(orderStaging);
-    confirmBtn = document.querySelector('.confirmBtn');
-    document.querySelectorAll('.single-menu').forEach(function (e) {
-        let orderId = e.querySelector('.menu-content').id;
-        if (e.classList.contains('active')) {
-            if (!orderStaging.includes(orderId)) {
-                orderStaging.push(orderId);
-            }
-        } else {
-            orderStaging = orderStaging.filter(function (id) {
-                return id !== orderId;
-            });
-        }
-        e.classList.remove('active');
+    const singleOrders = document.querySelectorAll('.single-menu.active');
+    const orderIds = Array.from(singleOrders).map(singleOrder => singleOrder.dataset.foodId);
+    console.log(orderIds);
+    return orderIds;
+}
 
-    });
-    // console.log(orderStaging);
-    return orderStaging;
+async function loadOrder() {
+    try {
+        let orderDetails = await getOrderDetail();
+        console.log((orderDetails.join(',')));
+        resp = await fetch(`/loadOrder?food_ids=${orderDetails.join(',')}`);
+        orders = await resp.json();
+        if (orders.length == 0) {
+            throw new Error('No order found');
+        }
+        document.querySelector('.menu-container').innerHTML = ''
+        document.querySelector('.order-container').innerHTML = ''
+        document.querySelector('.voice-chat').innerHTML = ''
+        const postOrderButton = document.createElement('button');
+        postOrderButton.classList.add('post-order-button', 'btn', 'btn-outline-success');
+        postOrderButton.id = 'post-order-button';
+        postOrderButton.textContent = 'Confirm Order';
+        for (let i = 0; i < orders.length; i++) {
+            let order = orders[i][0];
+            let orderDiv = document.createElement('div');
+            orderDiv.classList.add('single-order', 'col-12');
+            orderDiv.dataset.foodId = order.id;
+            orderDiv.innerHTML = `
+            <img src="${order.food_image}" alt="">
+            <div class="order-content" id = ${order.id}>
+                <h4 class="food_name">${order.food_name} <span class="food_price">$${order.food_price}</span></h4>
+                
+            </div>
+            `;
+            document.querySelector('.order-container').appendChild(orderDiv);
+            document.querySelector('.order-container').appendChild(postOrderButton);
+        }
+        orderDetails = orderDetails.map(Number);
+        console.log(orderDetails);
+        let confirmOrderBtn = document.querySelector('#post-order-button')
+        confirmOrderBtn.addEventListener('click', function () {
+            postOrder(orderDetails);
+            confirmOrderBtn.textContent = 'Thank you for your order!';
+            setTimeout(() => {
+                loadMenu();
+            }, 2000);
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 
-async function postOrder() {
+async function postOrder(orderDetails) {
     try {
-        const orderDetails = await getOrderDetail();
-        confirmBtn.classList.add('active');
-        // confirmButton.addEventListener("touchend", function () {
-        //     confirmBtn.classList.remove('active');
-        // })
-        // confirmButton.addEventListener("mouseup", function () {
-        //     confirmBtn.classList.remove('active');
-        // })
+        // const orderDetails = await getOrderDetail();
+
+        // console.log(orderDetails);
         const orderIds = [];
-        // console.log(`in post Order ${orderDetails}`);
         for (let food_id of orderDetails) {
+            const tableId = 1;
             const response = await fetch('/postOrder', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    table_id: tableId,
                     food_id: food_id,
-                    drink_id: 1,
+                    drink_id: null,
                     quantity: 1,
                 })
             });
@@ -425,3 +391,4 @@ async function postOrder() {
         console.log(err);
     }
 }
+
