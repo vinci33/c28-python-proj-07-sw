@@ -6,7 +6,9 @@ import numpy as np
 import asyncio
 from sanic.response import json as sanic_json
 import json
-from sanic import Sanic 
+from sanic import Sanic
+from sanic import Sanic
+from sanic_ext import Extend
 from routes import routes
 from dotenv import load_dotenv
 import os
@@ -27,8 +29,8 @@ client = OpenAI(
 app = Sanic("BAD_project_team7_2023_11_05")
 
 app = Sanic(__name__)
-# app.config.CORS_ORIGINS = "http://localhost:8080"
-# Extend(app)
+app.config.CORS_ORIGINS = "http://localhost:8080"
+Extend(app)
 
 
 print("Sanic app created")

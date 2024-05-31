@@ -1,16 +1,17 @@
 import { Knex } from "knex";
+import { MenuItem } from "../model";
 
 export class MenuService {
     constructor(private knex: Knex) {
 
     }
 
-    async getMenus() {
+    async getMenus(): Promise<MenuItem[]> {
         const result = await this.knex("menu_foods").select("*");
         return result;
     }
 
-    async postOrder(table_id: number, food_id: number, drink_id: number, quantity: number) {
+    async postOrder(table_id: number, food_id: number, drink_id: number, quantity: number): Promise<number[]> {
 
         // const id  = await this.knex("order")
         const customer_id = await this.knex("customers").insert(
@@ -36,7 +37,7 @@ export class MenuService {
         return orderItemId
     }
 
-    async getOrderedDetails(foodIds: number[]) {
+    async getOrderedDetails(foodIds: number[]): Promise<MenuItem[][]> {
         const results = [];
         for (let i = 0; i < foodIds.length; i++) {
             const result = await this.knex("menu_foods").select("id", "food_name", "food_price", "food_image").where("id", foodIds[i]);

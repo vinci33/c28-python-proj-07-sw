@@ -131,3 +131,5 @@ Instruction.txt
 .aider.chat.history.module
 .pyenv
 new_file*
+
+/python/csv/
